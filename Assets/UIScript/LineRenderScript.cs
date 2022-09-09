@@ -6,7 +6,7 @@ public class LineRenderScript : MonoBehaviour
 
     private float deltaTime = 0f;
     private float touchInterval = 0.025f;
-
+//ああああああああああああああああああああ
 
     private int lineIndex = 0;
 
