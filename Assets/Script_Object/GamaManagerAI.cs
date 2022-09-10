@@ -25,6 +25,7 @@ public class GamaManagerAI : MonoBehaviour
     public Text GetPointText;
 
     AudioSource audioSource;
+    public AudioSource BGM;
     public AudioClip Syoubu_Sound;
     public AudioClip StepSound;
     public AudioClip StartSound;
@@ -51,6 +52,7 @@ public class GamaManagerAI : MonoBehaviour
         pitcherScript = Pitcher.GetComponent<PitcherScript>();
         batterScript = Batter.GetComponent<BatterScript>();
         audioSource = GetComponent<AudioSource>();
+        BGM.Stop();
     }
 
     // Update is called once per frame
@@ -146,7 +148,6 @@ public class GamaManagerAI : MonoBehaviour
 
     void GameSet()
     {
-   
         GetPointText.text = "得点：" + GetPoint;
         GameSetPanel.anchoredPosition = Vector2.zero;
         audioSource.PlayOneShot(GameSetSound);
@@ -181,4 +182,8 @@ public class GamaManagerAI : MonoBehaviour
         SceneManager.LoadScene("TitleScene");
     }
 
+    public void StartGameSound()
+    {
+        BGM.Play();
+    }
 }

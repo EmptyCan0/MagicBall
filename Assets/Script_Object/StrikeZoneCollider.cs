@@ -217,13 +217,14 @@ public class StrikeZoneCollider : MonoBehaviourPunCallbacks, IPunObservable
     {
         float distance = Ball.transform.position.x - this.transform.position.x;
         Hukidashi.SetActive(true);
-        if (distance < 0)
+        print("distance" + distance);
+        if (distance > 1.9f)
         {
-            HintText.text = "すこし早い";
+            HintText.text = "すこし遅い";         
         }
         else
         {
-            HintText.text = "すこし遅い";
+            HintText.text = "すこし早い";
         }
         Invoke("HideHintText", 2.5f); //一秒後にテキストを隠す
     }

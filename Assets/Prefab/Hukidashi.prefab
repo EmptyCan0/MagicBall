@@ -89,7 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 1.5, y: 1.5}
+  m_EffectDistance: {x: 2, y: 2}
   m_UseGraphicAlpha: 1
 --- !u!1001 &2592059993381625260
 PrefabInstance:
@@ -217,6 +217,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.a
       value: 0.7411765
+      objectReference: {fileID: 0}
+    - target: {fileID: 7565308242243710926, guid: 3e9211de38e6e804fbb48bf965b89aa7,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7565308242243710926, guid: 3e9211de38e6e804fbb48bf965b89aa7,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7565308242243710926, guid: 3e9211de38e6e804fbb48bf965b89aa7,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3e9211de38e6e804fbb48bf965b89aa7, type: 3}

@@ -4416,6 +4416,8 @@ GameObject:
   - component: {fileID: 694397750}
   - component: {fileID: 694397749}
   - component: {fileID: 694397752}
+  - component: {fileID: 694397754}
+  - component: {fileID: 694397753}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -4507,6 +4509,48 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &694397753
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 694397748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de57dadf89535c4478458e33631a8947, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  StartRotate: 0
+--- !u!114 &694397754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 694397748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e52de21a22b6dd44c9cc19f810c65059, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Events:
+    m_Signals:
+    - {fileID: 11400000, guid: a3dc378e64ffe2743b59fa8c9dda0d74, type: 2}
+    m_Events:
+    - m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 694397753}
+          m_MethodName: StartRotation
+          m_Mode: 1
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!1 &703596619
 GameObject:
   m_ObjectHideFlags: 0
@@ -6889,27 +6933,27 @@ PrefabInstance:
     - target: {fileID: 923430530141042235, guid: 990844b13580c094fb8101bf234a9488,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 0.49999997
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 923430530141042235, guid: 990844b13580c094fb8101bf234a9488,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.49999997
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 923430530141042235, guid: 990844b13580c094fb8101bf234a9488,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 923430530799894774, guid: 990844b13580c094fb8101bf234a9488,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.49999997
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 923430530799894774, guid: 990844b13580c094fb8101bf234a9488,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 923430530888191492, guid: 990844b13580c094fb8101bf234a9488,
         type: 3}
@@ -7034,27 +7078,27 @@ PrefabInstance:
     - target: {fileID: 923430531111345009, guid: 990844b13580c094fb8101bf234a9488,
         type: 3}
       propertyPath: m_AnchorMin.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 923430531111345009, guid: 990844b13580c094fb8101bf234a9488,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 923430531111345009, guid: 990844b13580c094fb8101bf234a9488,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 923430531194346910, guid: 990844b13580c094fb8101bf234a9488,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 923430531194346910, guid: 990844b13580c094fb8101bf234a9488,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 990844b13580c094fb8101bf234a9488, type: 3}

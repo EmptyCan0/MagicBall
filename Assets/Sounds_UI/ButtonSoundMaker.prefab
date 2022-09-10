@@ -49,6 +49,7 @@ MonoBehaviour:
   MenuButtonPushed: {fileID: 8300000, guid: f757349efa6b63d4786c33d2dcc31327, type: 3}
   CloseMenuButtonPushed: {fileID: 8300000, guid: 079d806e69203154aa1557f5d2f8dac0,
     type: 3}
+  LineSendButton: {fileID: 8300000, guid: 8c31a33b97f1fea44867bb3986276f5c, type: 3}
 --- !u!82 &-5906440027565053786
 AudioSource:
   m_ObjectHideFlags: 0

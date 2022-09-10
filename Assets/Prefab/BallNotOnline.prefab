@@ -114,6 +114,7 @@ MonoBehaviour:
   Voice1: {fileID: 8300000, guid: e3489b2c98cc8464cab30eac8f4b065f, type: 3}
   Voice2: {fileID: 8300000, guid: cb34e077e24e50d41ac285b9be2b36ec, type: 3}
   Change: {fileID: 8300000, guid: 1f65c7f4bd4bdae42ad6e1b3dad701e2, type: 3}
+  Spark: {fileID: 1250507045210962, guid: 3fe0df07025a3e747855b1bb671fc04e, type: 3}
   AllDistance: 0
 --- !u!54 &4441597528391025203
 Rigidbody:
