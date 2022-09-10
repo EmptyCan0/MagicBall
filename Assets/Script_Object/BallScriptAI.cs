@@ -217,6 +217,8 @@ public class BallScriptAI : MonoBehaviour
         else
         {
             PointText.text = "ホームラン！\n" + Point + "ポイント！";
+            BallCameraScript BallCamera = GameObject.Find("BallCamera").GetComponent<BallCameraScript>();
+            BallCamera.StartCameraShaking(5.0f);
             audioSource.PlayOneShot(Voice2);
         }
         PointWrite(Point);

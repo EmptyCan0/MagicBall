@@ -24,6 +24,7 @@ public class BallScript_NotOnline : MonoBehaviour
     public AudioClip Voice2;
     public AudioClip Change;
 
+
     private bool IsHit = false;
     private bool IsGetScore = false;
 
@@ -220,6 +221,8 @@ public class BallScript_NotOnline : MonoBehaviour
         else
         {
             PointText.text = "ホームラン！\n" + Point + "ポイント！";
+            BallCameraScript BallCamera = GameObject.Find("BallCamera").GetComponent<BallCameraScript>();
+            BallCamera.StartCameraShaking(5.0f);
             audioSource.PlayOneShot(Voice2);
         }
         PointWrite(Point);

@@ -652,6 +652,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1479563995}
+        m_MethodName: WhenLineSendButtonPushed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &160302183
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6157,6 +6168,7 @@ GameObject:
   - component: {fileID: 1363437151}
   - component: {fileID: 1363437150}
   - component: {fileID: 1363437153}
+  - component: {fileID: 1363437154}
   m_Layer: 0
   m_Name: BallCamera
   m_TagString: Untagged
@@ -6239,6 +6251,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2ff0cdc3728e75c439ac309ead1e41d3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1363437154
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1363437149}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 351b9e1988babe5488a6ee77c9595e38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!224 &1374399213 stripped
@@ -7568,7 +7592,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 31, y: 618}
+  m_AnchoredPosition: {x: 31, y: 672}
   m_SizeDelta: {x: 1200, y: 600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1976884593
@@ -7593,7 +7617,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 12800000, guid: 6d989ad645eba264984c000e8bbd8188, type: 3}
     m_FontSize: 159
-    m_FontStyle: 0
+    m_FontStyle: 1
     m_BestFit: 1
     m_MinSize: 10
     m_MaxSize: 159
