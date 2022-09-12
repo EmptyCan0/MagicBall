@@ -46,6 +46,8 @@ public class TitleSceneScript : MonoBehaviour
                 var Rate = obj2["Rate"];
                 print(obj2["Name"]);
                 Name.text = PlayerPrefs.GetString("PlayerName") + ", レート: " + Rate;
+                int rate = System.Convert.ToInt32(obj2["Rate"]);
+                PlayerPrefs.SetInt("PlayerRate", rate);
             }
         });
     }

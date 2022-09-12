@@ -135,7 +135,7 @@ public class GamaManagerAI : MonoBehaviour
         pitcherScript.animator.SetTrigger("Back");
         batterScript.animator.SetTrigger("Back");
         batterScript.Simulation_SwingTime = 0;
-        GameObject touchField = GameObject.FindWithTag("Canvas");
+       // GameObject touchField = GameObject.FindWithTag("Canvas");
         GameObject Line = GameObject.FindWithTag("SendLine");
         Destroy(Line);
         if (BallCount == 6)

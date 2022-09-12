@@ -619,9 +619,8 @@ public class GameManager : MonoBehaviourPunCallbacks, IPunObservable
 
     float RateCal()
     {
-        float bias = (PlayersRate[1] - PlayersRate[0]) / 10f;
         float Defo = 10;
-        float gotPoint = Defo + bias;
+        float gotPoint = Defo;
         return gotPoint;
     }
 
