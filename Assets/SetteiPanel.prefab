@@ -1094,7 +1094,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "(\u30C7\u30D5\u30A9\u30EB\u30C8\uFF1A0.35)"
+  m_Text: "(\u30C7\u30D5\u30A9\u30EB\u30C8\uFF1A0.35)\n0.1\u304A\u30B9\u30B9\u30E1"
 --- !u!114 &923430530714208632
 MonoBehaviour:
   m_ObjectHideFlags: 0

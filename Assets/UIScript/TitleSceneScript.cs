@@ -15,7 +15,7 @@ public class TitleSceneScript : MonoBehaviour
     string BeforeRate, BeforeRate2;
     int BeforeRank, BeforeRank2;
     Text[] Texts = new Text[10];
-    Text[] Rivals = new Text[10];
+    string[] Rivals = new string[10];
     public Text[] LogIns = new Text[10];
     public GameObject canvas;
     int i, j = 0;
@@ -24,6 +24,7 @@ public class TitleSceneScript : MonoBehaviour
     bool NameisSame = false;
     int IndexNum = 0;
     int MyRank = 0;
+
 
     bool isSecond, isSecond2 = false;
 
@@ -106,6 +107,7 @@ public class TitleSceneScript : MonoBehaviour
                 {
                     if (i > 9)
                     {
+                        IndexNum = -1;
                         continue;
                     }
                     float Bias = 50f;
@@ -153,7 +155,7 @@ public class TitleSceneScript : MonoBehaviour
                         Texts[i].text = i + 1 + "位:" + PlayerPrefs.GetString("PlayerName") + ":" + Rate;
                         Texts[i].color = Color.red;
                         RateisSame = false;
-                        IndexNum = 0;
+                        IndexNum = -1;
                     }
                     i++;
                 }
@@ -170,8 +172,43 @@ public class TitleSceneScript : MonoBehaviour
         {
             return;
         }
+
+        int currentRank = 0;
+
+        NCMBQuery<NCMBObject> rankQuery = new NCMBQuery<NCMBObject>("PlayerRate");
+        rankQuery.WhereGreaterThan("Rate", PlayerPrefs.GetInt("PlayerRate"));
+        rankQuery.CountAsync((int count, NCMBException e) => {
+            if (e != null)
+            {
+                //件数取得失敗
+                print("できなかった");
+            }
+            else
+            {
+                //件数取得成功
+                print("調査はしている");
+                currentRank = count + 1; // 自分よりスコアが上の人がn人いたら自分はn+1位
+                print(currentRank);
+
+
+                StartAroundSerch(currentRank);
+
+            }
+        });
+                
+ 
+    }
+
+    public void StartAroundSerch(int currentRank)
+    {
+        int NumSkip;
+        int MaxLength = 5;
+        if (currentRank < MaxLength) { NumSkip = 0; } else { NumSkip = currentRank - MaxLength; }
+
         NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("PlayerRate");
         query.OrderByDescending("Rate");
+        query.Skip = NumSkip;
+        query.Limit = 2 * MaxLength + 1;
         query.FindAsync((List<NCMBObject> objList, NCMBException e) =>
         {
             if (e != null)
@@ -182,142 +219,51 @@ public class TitleSceneScript : MonoBehaviour
             {
                 indexcount = 0;
                 var rates = objList.Select(o => System.Convert.ToInt32(o["Rate"]));
-                
+
                 var names = objList.Select(o => System.Convert.ToString(o["Name"]));
 
-                i = 0;
-                foreach (var item in rates) //自分の場所をまず把握する
-                {
-                    i++;
-                    if (PlayerPrefs.GetInt("PlayerRate") == item)
-                    {
-                        print("上から" + i + "番目にいる");
-                        MyRank = i;
-                        break;
-                    }
+               
 
+
+                int i = 0;
+                for(i = 0; i < 10; i++)
+                {
+                    Rivals[i] = null;
                 }
 
-                int MaxLength = 4;
-                int MaxInvest = MaxLength + MyRank;
-                print("rank = " + MyRank);
-                print(MaxInvest);
-                bool Stop = false;
-                int StopNum = 0;
-                int NewRate = 0;
-                int NewRank = 0;
-                int CopyNewRank = 0;
-                int[] Ranks = new int[9];
-                int BeforeRating = 0;
-                //先ほどの自分の順位を基に、周辺レートのプレイヤーを取ってくる
-                foreach (var item in rates)
-                {
-                    j++;
-                    if (NewRate != item)
-                    {
-                        NewRank=j;//レートが変化しているなら順位を変える
-                    }
-                    NewRate = item;
-
-                    if (Mathf.Abs(MyRank - j) > MaxLength)
-                    {
-                        //表示するランク帯ではないので無視
-                    }
-                    else
-                    {
-                        if (!Stop)
-                        {
-                            StopNum = j; //j番目からランキング表示
-                            CopyNewRank = NewRank;//いま取ってきた順位を取得、これは自分ではない（自分が1位ではない時に限る）
-                            Ranks[indexcount] = NewRank;//表示するランク順位の初期値を設定
-                            Stop = true;//この関数は一回しか呼ばれない
-                        }
-
-                        if (BeforeRating == NewRate) //BeforeRatingは1個前のitem つまり同じレートが続いてるときである
-                        {
-                            Ranks[indexcount] = Ranks[indexcount - 1];//一個前の順位を持ってくる
-                        }
-                        else if(indexcount != 0)//一個前とレートが異なり、indexcount!=0のとき（自分が1位のときは省く）
-                        {
-                            Ranks[indexcount] = NewRank; //同率かつ1位ではないので順位を下げる
-                        }
-                        float Bias = 50f;
-                        Text UI = Instantiate(NameGene, new Vector2(TextPos2.anchoredPosition.x, TextPos2.anchoredPosition.y - (Bias * indexcount)), Quaternion.identity);
-                        UI.text = NewRate + "";
-                        Rivals[indexcount] = UI;
-                        Rivals[indexcount].transform.SetParent(this.canvas.transform, false);
-                        indexcount++;
-                        BeforeRating = item;
-                        if (j >= MaxInvest)
-                        {
-                            continue;
-                        }
-                    }
-                }
-                int MaxCount = indexcount; ;
-                print(StopNum + "StopNUm");
                 i = 0;
-                indexcount = 0;
-
                 foreach (var item in names)
                 {
+                    if (i > 9) { continue; }
+                    print(Rivals[i] + ":1回目");
+                    Rivals[i] = item;
                     i++;
-                    if (i >= StopNum)//STopNumは表示し始める一番最初の位置
-                    {
-                        if (indexcount >= MaxCount)
-                        {
-                            continue;
-                        }
-                        string Rate = "";
-                        if (Rivals[indexcount].text != null)
-                        {
-                            Rate = Rivals[indexcount].text;
-                        }
-                       // print(Rate);
-                        if (Rate == BeforeRate2)
-                        {
-
-                            if (PlayerPrefs.GetString("PlayerName") == item)
-                            {
-                                Rivals[indexcount].color = Color.red;
-                            }
-                            Rivals[indexcount].text = (Ranks[indexcount]) + "位:" + item + ":" + Rate;
-                            print(Rivals[indexcount].text);
-                        }
-                        else
-                        {
-
-                            if (PlayerPrefs.GetString("PlayerName") == item)
-                            {
-                                Rivals[indexcount].color = Color.red;
-                            }
-                            Rivals[indexcount].text = (Ranks[indexcount]) + "位:" + item + ":" + Rate;
-                            BeforeRank2 = i;
-                            print(Rivals[indexcount].text);
-                        }
-
-                        if (i == MyRank)
-                        {
-                            Rivals[indexcount].color = Color.red;
-                            Rivals[indexcount].text = MyRank + "位:" + PlayerPrefs.GetString("PlayerName") + ":" + PlayerPrefs.GetInt("PlayerRate");
-                        }
-
-                        BeforeRate2 = Rate;
-
-                        Rivals[indexcount].transform.SetParent(this.canvas.transform, false);
-                        indexcount++;
-
-                  
-                    }
-
                 }
-                isSecond = true;
+                i = 0;
+                foreach (var item in rates)
+                {
+                    NumSkip++;
+                    if (i > 9) { continue; }
+                    string name = Rivals[i];
+                    Rivals[i] = (NumSkip + "位:" + name + ":" + item);
+                    print(Rivals[i]);
+                    i++;
+                }
+                i = 0;
+                for (i = 0; i < 9; i++)
+                {
+                    float Bias = 50f;
+                    Text UI = Instantiate(NameGene, new Vector2(TextPos2.anchoredPosition.x, TextPos2.anchoredPosition.y - (Bias * i)), Quaternion.identity);
+                    UI.transform.SetParent(this.canvas.transform, false);
+                    UI.text = Rivals[i];
+
+                    if (i == MaxLength -1) { UI.color = Color.red; }
+                }
 
             }
 
         });
     }
-
     public void SerchLogIns()
     {
         NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("LogIn");

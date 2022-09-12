@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 50a4b988b0ad63045915ac531d3b31a1
+guid: 7a21e2e11b89c864583e929a857f4303
 ModelImporter:
   serializedVersion: 19300
   internalIDToNameTable: []
@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: "\u30DE\u30C6\u30EA\u30A2\u30EB.002"
-    second: {fileID: 2100000, guid: 20ae31fbea846bf4487c7d97ff45b997, type: 2}
+      name: Yane
+    second: {fileID: 2100000, guid: 51c2e1115ea84274f93e36ce648fb308, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: "\u30DE\u30C6\u30EA\u30A2\u30EB"
+    second: {fileID: 2100000, guid: 92c29654defcc8e47bd95df8355707e3, type: 2}
   materials:
     materialImportMode: 1
     materialName: 0
