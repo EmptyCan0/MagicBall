@@ -50,6 +50,8 @@ MonoBehaviour:
   CloseMenuButtonPushed: {fileID: 8300000, guid: 079d806e69203154aa1557f5d2f8dac0,
     type: 3}
   LineSendButton: {fileID: 8300000, guid: 8c31a33b97f1fea44867bb3986276f5c, type: 3}
+  LineDeleteButton: {fileID: 8300000, guid: dda2948dedb8a4a4a8763f683f0b98a6, type: 3}
+  DecideButton: {fileID: 8300000, guid: 3cd08c0a9e540554b997dd0fc168efda, type: 3}
 --- !u!82 &-5906440027565053786
 AudioSource:
   m_ObjectHideFlags: 0

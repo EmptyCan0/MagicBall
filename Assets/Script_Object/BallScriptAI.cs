@@ -95,8 +95,8 @@ public class BallScriptAI : MonoBehaviour
         DirectionPos = Line.GetPosition(Index);
 
         print("SIZE = " + IndexSize);
-        float DefaultSpeed = 40f;
-        speed = DefaultSpeed*(70f/IndexSize);
+        float DefaultSpeed = 30f;
+        speed = DefaultSpeed*(45f/IndexSize);
 
         need_time = distance / speed;
 

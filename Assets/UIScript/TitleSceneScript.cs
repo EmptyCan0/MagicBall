@@ -92,6 +92,7 @@ public class TitleSceneScript : MonoBehaviour
         }
         NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("PlayerRate");
         query.OrderByDescending("Rate");
+        query.Limit = 10;
         query.FindAsync((List<NCMBObject> objList, NCMBException e) =>
         {
             if (e != null)
@@ -102,63 +103,64 @@ public class TitleSceneScript : MonoBehaviour
             {
                 var rates = objList.Select(o => System.Convert.ToInt32(o["Rate"]));
                 var names = objList.Select(o => System.Convert.ToString(o["Name"]));
-
+                string[] NamesChar = new string[10];
+                int[] RateNum = new int[10];
+                int[] RankNum = new int[10];
+                i = 0;
                 foreach (var item in rates)
                 {
-                    if (i > 9)
-                    {
-                        IndexNum = -1;
-                        continue;
-                    }
-                    float Bias = 50f;
-                    Text UI = Instantiate(NameGene, new Vector2(TextPos.anchoredPosition.x, TextPos.anchoredPosition.y - (Bias * i)), Quaternion.identity);
-                    UI.text = item + "";
+                    RateNum[i] = item;
                     i++;
-                    Texts[i - 1] = UI;
-                    if (item == PlayerPrefs.GetInt("PlayerRate") && !RateisSame)
-                    {
-                        RateisSame = true;
-                        IndexNum = i - 1;
-                    }
-
-                }
-                for (int n = i; n < 10; n++)
-                {
-                    float Bias = 50f;
-                    Text UI = Instantiate(NameGene, new Vector2(TextPos.anchoredPosition.x, TextPos.anchoredPosition.y - (Bias * n)), Quaternion.identity);
-                    UI.text = "---";
-                    Texts[n] = UI;
-                    Texts[n].transform.SetParent(this.canvas.transform, false);
                 }
                 i = 0;
-                bool EqualToPlayerRate = false;
                 foreach (var item in names)
                 {
-                    if (i > 9)
+                    NamesChar[i] = item;
+                    i++;
+                }
+                i = 0;
+
+                int Rank = 0;
+                int BeforeRate = -1;
+                bool SameAsMyRate = false;
+                string CopyName = "";
+                RankNum[0] = 1;
+                for (i = 0; i < 10; i++)
+                {
+                    Rank++;
+                    if(RateNum[i] == BeforeRate)
                     {
-                        continue;
-                    }
-                    // Debug.Log(": " + item);
-                    string Rate = Texts[i].text;
-                    if (Rate == BeforeRate) {
-                        Texts[i].text = BeforeRank + "位:" + item + ":" + Rate;
+                        RankNum[i] = RankNum[i - 1];
                     }
                     else
                     {
-                        Texts[i].text = i + 1 + "位:" + item + ":" + Rate;
-                        BeforeRank = i + 1;
+                        RankNum[i] = Rank;
                     }
-                    BeforeRate = Rate;
-                    Texts[i].transform.SetParent(this.canvas.transform, false);
-                    if (item == PlayerPrefs.GetString("PlayerName") || IndexNum == i)
+                    float Bias = 50f;
+                    Text UI = Instantiate(NameGene, new Vector2(TextPos.anchoredPosition.x, TextPos.anchoredPosition.y - (Bias * i)), Quaternion.identity);
+                    UI.transform.SetParent(this.canvas.transform, false);
+                    UI.text = (RankNum[i] + "位:" + NamesChar[i] + ":" + RateNum[i]);
+
+                    if (SameAsMyRate)
                     {
-                        Texts[i].text = i + 1 + "位:" + PlayerPrefs.GetString("PlayerName") + ":" + Rate;
-                        Texts[i].color = Color.red;
-                        RateisSame = false;
-                        IndexNum = -1;
+                        if (RateNum[i] == PlayerPrefs.GetInt("PlayerRate") && NamesChar[i] == PlayerPrefs.GetString("PlayerName"))
+                        {
+                            UI.text = (RankNum[i] + "位:" + CopyName + ":" + RateNum[i]);
+                        }
                     }
-                    i++;
+
+                    if (RateNum[i] == PlayerPrefs.GetInt("PlayerRate") && !SameAsMyRate)
+                    {
+                        CopyName = NamesChar[i];
+                        UI.text = (RankNum[i] + "位:" + PlayerPrefs.GetString("PlayerName") + ":" + PlayerPrefs.GetInt("PlayerRate"));
+                        UI.color = Color.red;
+                        SameAsMyRate = true;
+                    }
+
+                    BeforeRate = RateNum[i];
+
                 }
+
                 isSecond2 = true;
 
             }
@@ -203,12 +205,13 @@ public class TitleSceneScript : MonoBehaviour
     {
         int NumSkip;
         int MaxLength = 5;
-        if (currentRank < MaxLength) { NumSkip = 0; } else { NumSkip = currentRank - MaxLength; }
+        bool Skip = false;
+        if (currentRank < MaxLength) { NumSkip = 0; Skip = false; } else { NumSkip = currentRank - MaxLength; Skip = true; }
 
         NCMBQuery<NCMBObject> query = new NCMBQuery<NCMBObject>("PlayerRate");
         query.OrderByDescending("Rate");
         query.Skip = NumSkip;
-        query.Limit = 2 * MaxLength + 1;
+        query.Limit = 2 * MaxLength - 1;
         query.FindAsync((List<NCMBObject> objList, NCMBException e) =>
         {
             if (e != null)
@@ -222,43 +225,147 @@ public class TitleSceneScript : MonoBehaviour
 
                 var names = objList.Select(o => System.Convert.ToString(o["Name"]));
 
-               
+                if (Skip)
+                {
+                    int i = 0;
+
+                    int[] RateNum = new int[9];
+                    int[] RankNum = new int[9];
+                    foreach (var item in rates)
+                    {
+                        RateNum[i] = item;
+                        i++;
+                    }
+                    i = 0;
+                    int BeforeRate = RateNum[MaxLength - 1];
+                    int k = currentRank;
+                    RankNum[MaxLength - 1] = currentRank;
+                    for (i = MaxLength - 2; i >= 0; i--)
+                    {
+                        k--;
+                        if (RateNum[i] == BeforeRate)
+                        {
+                            RankNum[i] = RankNum[i + 1];
+                        }
+                        else
+                        {
+                            RankNum[i] = k;
+                        }
+                        BeforeRate = RateNum[i];
+                    }
+                    k = currentRank - 1;
+                    BeforeRate = -1;
+                    for (i = MaxLength - 1; i < 9; i++)
+                    {
+                        k++;
+                        if (RateNum[i] == BeforeRate)
+                        {
+                            RankNum[i] = RankNum[i - 1];
+                        }
+                        else
+                        {
+                            RankNum[i] = k;
+                        }
+                        BeforeRate = RateNum[i];
+                    }
+                    for (i = 0; i < 9; i++)
+                    {
+                        print(RankNum[i] + "位");
+                    }
+                    i = 0;
 
 
-                int i = 0;
-                for(i = 0; i < 10; i++)
+                    foreach (var item in names)
+                    {
+                        if (i > 9) { continue; }
+                        print(Rivals[i] + ":1回目");
+                        Rivals[i] = item;
+                        i++;
+                    }
+
+
+
+                    i = 0;
+                    foreach (var item in rates)
+                    {
+
+                        if (i > 9) { continue; }
+                        string name = Rivals[i];
+                        Rivals[i] = (RankNum[i] + "位:" + name + ":" + item);
+                        print(Rivals[i]);
+                        i++;
+                    }
+                    i = 0;
+                    for (i = 0; i < 9; i++)
+                    {
+                        float Bias = 50f;
+                        Text UI = Instantiate(NameGene, new Vector2(TextPos2.anchoredPosition.x, TextPos2.anchoredPosition.y - (Bias * i)), Quaternion.identity);
+                        UI.transform.SetParent(this.canvas.transform, false);
+                        UI.text = Rivals[i];
+
+                        if (i == MaxLength - 1)
+                        {
+                            UI.color = Color.red;
+                            Rivals[i] = (currentRank + "位:" + PlayerPrefs.GetString("PlayerName") + ":" + PlayerPrefs.GetInt("PlayerRate"));
+                            UI.text = Rivals[i];
+                        }
+                    }
+                }
+                else
                 {
-                    Rivals[i] = null;
+                    i = 0;
+                    int k = 0;
+                    int[] RateNum2 = new int[9];
+                    int[] RankNum2 = new int[9];
+                    foreach (var item in rates)
+                    {
+                        RateNum2[i] = item;
+                        i++;
+                    }
+                    int BeforeRate = -1;
+                    RankNum2[0] = 1;
+                    for (i = 0; i < 9; i++)
+                    {
+                        k++;
+                        if (RateNum2[i] == BeforeRate)
+                        {
+                            RankNum2[i] = RankNum2[i - 1]; 
+                        }
+                        else
+                        {
+                            RankNum2[i] = k;
+                        }
+                        BeforeRate = RateNum2[i];
+                       
+                    }
+                    i = 0;
+                    foreach (var item in names)
+                    {
+                        if (i > 9) { continue; }
+                        
+                        Rivals[i] = (RankNum2[i] + "位:" + item + ":" + RateNum2[i]);
+                        print(Rivals[i]);
+                        i++;
+                    }
+                    i = 0;
+
+                    for (i = 0; i < 9; i++)
+                    {
+                        float Bias = 50f;
+                        Text UI = Instantiate(NameGene, new Vector2(TextPos2.anchoredPosition.x, TextPos2.anchoredPosition.y - (Bias * i)), Quaternion.identity);
+                        UI.transform.SetParent(this.canvas.transform, false);
+                        UI.text = Rivals[i];
+
+                        if (i == currentRank - 1)
+                        {
+                            UI.color = Color.red;
+                            Rivals[i] = (currentRank + "位:" + PlayerPrefs.GetString("PlayerName") + ":" + PlayerPrefs.GetInt("PlayerRate"));
+                            UI.text = Rivals[i];
+                        }
+                    }
+
                 }
 
-                i = 0;
-                foreach (var item in names)
-                {
-                    if (i > 9) { continue; }
-                    print(Rivals[i] + ":1回目");
-                    Rivals[i] = item;
-                    i++;
-                }
-                i = 0;
-                foreach (var item in rates)
-                {
-                    NumSkip++;
-                    if (i > 9) { continue; }
-                    string name = Rivals[i];
-                    Rivals[i] = (NumSkip + "位:" + name + ":" + item);
-                    print(Rivals[i]);
-                    i++;
-                }
-                i = 0;
-                for (i = 0; i < 9; i++)
-                {
-                    float Bias = 50f;
-                    Text UI = Instantiate(NameGene, new Vector2(TextPos2.anchoredPosition.x, TextPos2.anchoredPosition.y - (Bias * i)), Quaternion.identity);
-                    UI.transform.SetParent(this.canvas.transform, false);
-                    UI.text = Rivals[i];
-
-                    if (i == MaxLength -1) { UI.color = Color.red; }
-                }
 
             }
 

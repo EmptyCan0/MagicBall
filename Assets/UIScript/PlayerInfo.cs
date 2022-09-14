@@ -19,7 +19,7 @@ public class PlayerInfo : MonoBehaviour
     bool Ok = true;
     void Start()
     {
-        // PlayerPrefs.SetString("PlayerName", "");
+       // PlayerPrefs.SetString("PlayerName", "");
         if (PlayerPrefs.GetString("PlayerName") != "")
         {
             Login();

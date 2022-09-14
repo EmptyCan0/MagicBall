@@ -102,6 +102,8 @@ public class BallScript : MonoBehaviour
         this.transform.position = OldPos;
         Index++;
         DirectionPos = Line.GetPosition(Index);
+        float DefaultSpeed = 30f;
+        speed = DefaultSpeed * (45f / IndexSize);
 
         need_time = distance / speed;
 

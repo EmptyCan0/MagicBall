@@ -97,10 +97,13 @@ public class BallScript_NotOnline : MonoBehaviour
 
 
         LineRenderScript lineRenderScript = GameObject.FindWithTag("SendLine").GetComponent<LineRenderScript>();
-        float DefaultSpeed = 30;
+        float DefaultSpeed = 30f;
+        speed = DefaultSpeed * (45f / IndexSize);
+        print(IndexSize + "index size");
+       /* float DefaultSpeed = 30;
         speed = DefaultSpeed * (12f / lineRenderScript.AllDistance) + 5; //
         print("speed" + speed);
-        print("distance" + lineRenderScript.AllDistance);
+        print("distance" + lineRenderScript.AllDistance);*/
 
         need_time = distance / speed;
 

@@ -36,6 +36,9 @@ public class LineRenderScript : MonoBehaviour
 
     bool oneshot = false;
 
+    AudioSource audioSource;
+    public AudioClip DrawSound;
+
 
     void Start()
     {
@@ -45,7 +48,7 @@ public class LineRenderScript : MonoBehaviour
         lineRenderer = this.gameObject.GetComponent<LineRenderer>();
         Panel = GameObject.FindWithTag("InkGage").GetComponent<RectTransform>();
         InkGage = GameObject.Find("Ink");
-
+        audioSource = this.gameObject.GetComponent<AudioSource>();
     }
 
 
@@ -56,6 +59,7 @@ public class LineRenderScript : MonoBehaviour
             if (!oneshot)
             {
                 Panel.anchoredPosition = Vector2.zero;
+                audioSource.PlayOneShot(DrawSound);
                 oneshot = true;
             }
             Ray ray1 = Camera.main.ScreenPointToRay(Input.mousePosition);

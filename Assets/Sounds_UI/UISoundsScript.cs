@@ -9,6 +9,8 @@ public class UISoundsScript : MonoBehaviour
     public AudioClip MenuButtonPushed;
     public AudioClip CloseMenuButtonPushed;
     public AudioClip LineSendButton;
+    public AudioClip LineDeleteButton;
+    public AudioClip DecideButton;
 
     private AudioSource audioSource;
     void Start()
@@ -45,5 +47,15 @@ public class UISoundsScript : MonoBehaviour
     public void WhenLineSendButtonPushed()
     {
         audioSource.PlayOneShot(LineSendButton);
+    }
+
+    public void WhenLineDleteButtonPushed()
+    {
+        audioSource.PlayOneShot(LineDeleteButton);
+    }
+
+    public void WhenDecideButtonPushed()
+    {
+        audioSource.PlayOneShot(DecideButton);
     }
 }
